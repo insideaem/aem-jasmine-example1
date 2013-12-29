@@ -67,7 +67,7 @@
 			<plugin>
 				<groupId>com.github.timurstrekalov</groupId>
 				<artifactId>saga-maven-plugin</artifactId>
-				<version>1.4.0</version>
+				<version>1.5.2</version>
 				<executions>
 					<execution>
 						<phase>test</phase>
