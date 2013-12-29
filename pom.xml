@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!-- ====================================================================== -->
+	<!-- P A R E N T P R O J E C T D E S C R I P T I O N -->
+	<!-- ====================================================================== -->
+
+	<!-- ====================================================================== -->
+	<!-- P R O J E C T D E S C R I P T I O N -->
+	<!-- ====================================================================== -->
+
+	<artifactId>aem-jasmine-example1</artifactId>
+	<packaging>content-package</packaging>
+	<name>AEM Jasmine Integration: Example 1</name>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/content/jcr_root</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/.vlt</exclude>
+					<exclude>**/.vltignore</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>com.github.searls</groupId>
+				<artifactId>jasmine-maven-plugin</artifactId>
+				<version>1.3.1.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<jsSrcDir>${project.basedir}${file.separator}src${file.separator}main${file.separator}content${file.separator}jcr_root</jsSrcDir>
+					<keepServerAlive>true</keepServerAlive>
+
+					<specExcludes>
+						<exclude>**/vendor/**</exclude>
+					</specExcludes>
+					<sourceIncludes>
+						<include>apps/insideaem/aemjasmine/widgets/pagemanager/js/Namespace.js</include>
+						<include>apps/insideaem/aemjasmine/widgets/pagemanager/js/Constants.js</include>
+						<include>apps/insideaem/aemjasmine/widgets/pagemanager/js/CreatePageController.js</include>
+						<include>apps/insideaem/aemjasmine/widgets/pagemanager/js/CreatePageView.js</include>
+						<include>apps/insideaem/aemjasmine/widgets/pagemanager/js/Application.js</include>
+					</sourceIncludes>
+					<preloadSources>
+						<source>http://localhost:4502/etc/clientlibs/granite/jquery.js</source>
+						<source>http://localhost:4502/etc/clientlibs/granite/utils.js</source>
+						<source>http://localhost:4502/etc/clientlibs/foundation/shared.js</source>
+						<source>http://localhost:4502/libs/cq/ui/rte.js</source>
+						<source>vendor/aem/beforeWidgets.js</source>
+						<source>http://localhost:4502/libs/cq/ui/widgets.js</source>
+						<source>http://localhost:4502/libs/cq/ui/widgets/themes/default.js</source>
+					</preloadSources>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.timurstrekalov</groupId>
+				<artifactId>saga-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>coverage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<threadCount>4</threadCount>
+					<backgroundJavaScriptTimeout>0</backgroundJavaScriptTimeout>
+					<cacheInstrumentedCode>true</cacheInstrumentedCode>
+					<baseDir>http://localhost:${jasmine.serverPort}</baseDir>
+					<outputDir>${project.build.directory}/coverage</outputDir>
+					<noInstrumentPatterns>
+						<pattern>.*/spec/.*</pattern> <!-- Don't instrument specs -->
+					</noInstrumentPatterns>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<includeEmptyDirs>true</includeEmptyDirs>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>com.day.jcr.vault</groupId>
+				<artifactId>content-package-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<filterSource>src/main/content/META-INF/vault/filter.xml</filterSource>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+	<!-- profiles -->
+
+	<profiles>
+		<profile>
+			<id>deployAuthor</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.day.jcr.vault</groupId>
+						<artifactId>content-package-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>install-content-package</id>
+								<phase>install</phase>
+								<goals>
+									<goal>install</goal>
+								</goals>
+								<configuration>
+									<targetURL>http://localhost:4502/crx/packmgr/service.jsp</targetURL>
+									<username>admin</username>
+									<password>admin</password>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<groupId>com.insideaem</groupId>
+	<url>http://www.insideaem.com</url>
+	<description>This project contains a sample implementation showing how to integrate Adobe AEM with Jasmine.</description>
+	<version>1.0</version>
+</project>

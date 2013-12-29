@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+	xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
+	jcr:primaryType="cq:Page">
+	<jcr:content jcr:primaryType="cq:PageContent" jcr:title="Page Manager"
+		jsLibs="[cq.widgets,insideaem.aemjasmine.pagemanager]"
+		sling:resourceType="cq/ui/components/widget" xtype="pagemanager" />
+</jcr:root>
