@@ -53,13 +53,13 @@
 						<include>apps/insideaem/aemjasmine/widgets/pagemanager/js/Application.js</include>
 					</sourceIncludes>
 					<preloadSources>
-						<source>http://localhost:4502/etc/clientlibs/granite/jquery.js</source>
-						<source>http://localhost:4502/etc/clientlibs/granite/utils.js</source>
-						<source>http://localhost:4502/etc/clientlibs/foundation/shared.js</source>
-						<source>http://localhost:4502/libs/cq/ui/rte.js</source>
+						<source>vendor/aem/etc/clientlibs/granite/jquery.js</source>
+						<source>vendor/aem/etc/clientlibs/granite/utils.js</source>
+						<source>vendor/aem/etc/clientlibs/foundation/shared.js</source>
+						<source>vendor/aem/libs/cq/ui/rte.js</source>
 						<source>vendor/aem/beforeWidgets.js</source>
-						<source>http://localhost:4502/libs/cq/ui/widgets.js</source>
-						<source>http://localhost:4502/libs/cq/ui/widgets/themes/default.js</source>
+						<source>vendor/aem/libs/cq/ui/widgets.js</source>
+						<source>vendor/aem/libs/cq/ui/widgets/themes/default.js</source>
 					</preloadSources>
 				</configuration>
 			</plugin>
@@ -111,6 +111,51 @@
 	<!-- profiles -->
 
 	<profiles>
+		<profile>
+			<id>adobe-public</id>
+
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<properties>
+
+				<releaseRepository-Id>adobe-public-releases</releaseRepository-Id>
+				<releaseRepository-Name>Adobe Public Releases</releaseRepository-Name>
+
+				<releaseRepository-URL>http://repo.adobe.com/nexus/content/groups/public</releaseRepository-URL>
+			</properties>
+
+			<repositories>
+				<repository>
+					<id>adobe-public-releases</id>
+					<name>Adobe Basel Public Repository</name>
+					<url>http://repo.adobe.com/nexus/content/groups/public</url>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+
+			<pluginRepositories>
+				<pluginRepository>
+					<id>adobe-public-releases</id>
+					<name>Adobe Basel Public Repository</name>
+					<url>http://repo.adobe.com/nexus/content/groups/public</url>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
 		<profile>
 			<id>deployAuthor</id>
 			<build>
